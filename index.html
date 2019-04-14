@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拼圖小遊戲</title>
+    <style>
+        #photo {
+            width: 600px;
+            height: 600px;
+
+
+            /* background-repeat: no-repeat;
+            background-size: cover; */
+            margin: 0px auto 0px;
+            position: relative;
+
+        }
+
+        #start {
+            width: 100px;
+            display: block;
+            margin: 20px auto 10px;
+        }
+
+        .col-3 {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+
+        }
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div id="photo" class="row">
+            <!-- <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="background-image:url('http://placekitten.com/600/600'); margin-left:0px; margin-top:0px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden;  padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-150px; margin-top:0px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-300px; margin-top:0px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-450px; margin-top:0px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:0px; margin-top:-150px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-150px; margin-top:-150px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-300px; margin-top:-150px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-450px; margin-top:-150px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:0px; margin-top:-300px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-150px; margin-top:-300px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-300px; margin-top:-300px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-450px; margin-top:-300px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:0px; margin-top:-450px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-150px; margin-top:-450px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-300px; margin-top:-450px;"></div>
+            <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
+                    style="margin-left:-450px; margin-top:-450px;"></div> -->
+
+        </div>
+
+        <button class="start" id="start">開始</button>
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var posConv = {};
+            for (var i = 0; i < 16; i++) {
+                $("#photo").append("<div class='clickkkk col-3 border' id='pz-" + i + "' style='width: 150px; height: 150px; overflow: hidden; padding: 0px;'><img src='http://placekitten.com/600/600'/></div>")
+                var row = parseInt(i / 4);
+                var col = i % 4;
+
+                $("#pz-" + i + " img").css("margin-left", col * -150 + 1).css("margin-top", row * -150 + 1);
+
+                posConv[i] = { row: row, col: col };
+                //console.info(posConv[i].row); //儲存每個格子的座標
+            }
+
+            $("#pz-0 img").remove();
+
+            function getNearPos(i) {
+                var pool = [];
+                var row = posConv[i].row;
+                var col = posConv[i].col;
+                if (row > 0) //上
+                    pool.push((row - 1) * 4 + col);
+                if (row < 4) //下
+                    pool.push((row + 1) * 4 + col);
+                if (col > 0) //左
+                    pool.push(i - 1);
+                if (col < 4) //右
+                    pool.push(i + 1);
+                return pool;
+            }
+            $(".clickkkk").on("click", function () {
+                var cells = $("#photo div");
+                var i = cells.index(this);  //取的點擊位置
+                console.info(i);
+                var toCheck = getNearPos(i);   //拿到上下左右的位置
+                while (toCheck.length > 0) {   
+                    var j = toCheck.pop();   //一個一個取出 並判斷是否為空白的格子
+                    if (cells.eq(j).attr("id") == "pz-0") //找到空白格
+                    {
+                        //排序，必要時對調，讓i < j
+                        if (i > j) { 
+                            var k = j; 
+                            j = i; 
+                            i = k; 
+                        }
+                        var ahead = cells.eq(i);
+                        console.info(i+"aaa");
+                        var behind = cells.eq(j);
+                        console.info(j+"bbb");
+                        var behindPrev = behind.prev();   //behind的前一個元素
+                        
+                        if (Math.abs(i - j) == 1)//格子數相差1 才能左右對調
+                            behind.after(ahead);
+                        else //上下對調
+                        {
+                            ahead.after(behind);      //來
+                            behindPrev.after(ahead);  //回
+                        }
+                        break;
+                    }
+                }
+            })
+            $("#start").on("click", function () {
+                for (var i = 0; i < 500; i++) {
+                    var cells = $("#photo div");
+                    //找出空格所在位置，並取得其相鄰圖塊
+                    var toMove = getNearPos(cells.index($("#pz-0")[0]));
+                    cells.eq(toMove[ //由空格的相鄰圖塊擇一挪動
+                        parseInt(Math.random() * toMove.length)
+                    ]).click().show();
+                }
+            })
+        });
+
+    </script>
+
+</body>
+
+</html>
