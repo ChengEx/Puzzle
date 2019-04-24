@@ -7,6 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>拼圖小遊戲</title>
     <style>
+        body {
+            background: url(./image/bg-dirt.png);
+        }
+
         #photo {
             width: 600px;
             height: 600px;
@@ -37,7 +41,7 @@
 
 <body>
     <div class="container">
-        <div id="photo" class="row">
+        <div id="photo" class="row mt-5">
             <!-- <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden; padding: 0px;"><img src="http://placekitten.com/600/600"
                     style="background-image:url('http://placekitten.com/600/600'); margin-left:0px; margin-top:0px;"></div>
             <div class="col-3 border" style="width: 150px; height: 150px; overflow: hidden;  padding: 0px;"><img src="http://placekitten.com/600/600"
@@ -94,6 +98,7 @@
             }
 
             $("#pz-0 img").remove();
+          
 
             function getNearPos(i) {
                 var pool = [];
